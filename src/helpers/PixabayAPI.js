@@ -3,7 +3,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://pixabay.com/api/';
 
 export const getImages = (query, page) => {
-  const KEY = '39344710-74bbb124ce1c1439ca3e67f9f';
+  const KEY = '39344710-8effa9f65cae25b1f597b248fffbed32';
   const options = {
     per_page: 12,
     image_type: 'photo',
