@@ -8,3 +8,7 @@ axios.defaults.headers.common['Authorization'] = API_KEY;
 export const getMovies = time_window => {
   return axios.get(`/trending/movie/${time_window}`);
 };
+
+export const getMovieById = id => {
+  return axios.get(`/movie/${id}`);
+};

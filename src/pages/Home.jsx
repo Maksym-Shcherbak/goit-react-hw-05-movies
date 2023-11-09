@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getMovies } from 'helpers/PixabayAPI';
 
 export const Home = () => {
@@ -18,16 +18,18 @@ export const Home = () => {
     }
   };
 
+  const location = useLocation();
+
   console.log(trendMovies);
   return (
-    <main>
-      <h1>Welcome</h1>
+    <>
+      <h1>Welcome to Cinema Max</h1>
       <ul>
         {trendMovies.length > 0 &&
           trendMovies.map(movie => {
             return (
               <li key={movie.id}>
-                <Link>
+                <Link to={`movies/${movie.id}`} state={{ from: location }}>
                   <img
                     src={`http://image.tmdb.org/t/p/original${movie.poster_path}`}
                     alt={movie.title}
@@ -39,6 +41,6 @@ export const Home = () => {
             );
           })}
       </ul>
-    </main>
+    </>
   );
 };
