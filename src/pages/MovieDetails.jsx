@@ -6,18 +6,17 @@ export const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const { movieId } = useParams();
 
-  const getMovieDetails = async () => {
-    try {
-      console.log(movieId);
-      const response = await getMovieById(movieId);
-      console.log(response.data);
-      setMovieInfo(response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   useEffect(() => {
+    const getMovieDetails = async () => {
+      try {
+        console.log(movieId);
+        const response = await getMovieById(movieId);
+        console.log(response.data);
+        setMovieInfo(response.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
     getMovieDetails(movieId);
   }, [movieId]);
 
