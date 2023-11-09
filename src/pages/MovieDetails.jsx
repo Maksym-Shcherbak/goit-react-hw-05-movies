@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { getMovieById } from 'helpers/PixabayAPI';
 
 export const MovieDetails = () => {
@@ -34,6 +34,16 @@ export const MovieDetails = () => {
           <p>User score: {(Number(movieInfo.vote_average) / 10) * 100}%</p>
           <p>{movieInfo.overview}</p>
           <p>Genres: {movieInfo.genres.map(genre => `${genre.name}, `)}</p>
+          <h3>Additional information</h3>
+          <ul>
+            <li>
+              <Link to="cast">Cast</Link>
+            </li>
+            <li>
+              <Link to="reviews">Reviews</Link>
+            </li>
+          </ul>
+          <Outlet />
         </>
       )}
     </>

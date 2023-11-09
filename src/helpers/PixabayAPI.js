@@ -12,3 +12,11 @@ export const getMovies = time_window => {
 export const getMovieById = id => {
   return axios.get(`/movie/${id}`);
 };
+
+export const getCast = id => {
+  return axios.get(`/movie/${id}/credits`);
+};
+
+export const getReviews = id => {
+  return axios.get(`/movie/${id}/reviews`);
+};
