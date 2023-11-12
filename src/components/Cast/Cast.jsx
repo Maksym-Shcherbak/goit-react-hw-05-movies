@@ -10,7 +10,7 @@ import {
 } from './Cast.styled';
 
 const Cast = () => {
-  const [actors, setActors] = useState(null);
+  const [actors, setActors] = useState([]);
   const [error, setError] = useState(null);
   const { movieId } = useParams();
   const defaultImg =

@@ -6,7 +6,7 @@ import { Loader } from 'components/Loader/Loader';
 import { toast } from 'react-toastify';
 
 const Home = () => {
-  const [trendMovies, setTrendMovies] = useState(null);
+  const [trendMovies, setTrendMovies] = useState([]);
   const [timeTrend, setTimeTrend] = useState('day');
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ const Home = () => {
     const getTrendMovies = async () => {
       try {
         setIsLoading(true);
-        setTrendMovies(null);
+        setTrendMovies([]);
         setError(null);
         const response = await getMovies(timeTrend);
         setTrendMovies(response.data.results);
@@ -57,7 +57,7 @@ const Home = () => {
       }
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
-      {trendMovies && <MoviesList movies={trendMovies} />}
+      {trendMovies.length !== 0 && <MoviesList movies={trendMovies} />}
     </>
   );
 };

@@ -9,7 +9,7 @@ import { Loader } from 'components/Loader/Loader';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [movies, setMovies] = useState(null);
+  const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
@@ -31,7 +31,7 @@ const Movies = () => {
     const getMoviesBySearch = async () => {
       try {
         setIsLoading(true);
-        setMovies(null);
+        setMovies([]);
         setError(null);
         const response = await fetchMoviesBySearch(MovieName, page);
         if (response.data.total_results === 0) {
@@ -58,7 +58,7 @@ const Movies = () => {
   return (
     <>
       <Searchbar onGetMovies={onGetQuery} />
-      {movies && !isLoading && <MoviesList movies={movies} />}
+      {movies.length !== 0 && !isLoading && <MoviesList movies={movies} />}
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
       {pageCount > 1 && (
