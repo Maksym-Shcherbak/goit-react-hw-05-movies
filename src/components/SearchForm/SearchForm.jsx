@@ -19,7 +19,7 @@ export const SearchForm = ({ query, saveName }) => {
         type="text"
         autoComplete="off"
         autoFocus
-        placeholder="Search images and photos"
+        placeholder="Search movies"
         name="searchQuery"
         value={query}
         onChange={saveName}

@@ -3,12 +3,16 @@ import { Searchbar } from 'components/Searchbar/Searchbar';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 import { fetchMoviesBySearch } from 'helpers/MoviesAPI';
 import ReactPaginate from 'react-paginate';
+import { toast } from 'react-toastify';
 import '../../node_modules/react-paginate/theme/basic/react-paginate.css';
 import { useSearchParams } from 'react-router-dom';
+import { Loader } from 'components/Loader/Loader';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
 
@@ -25,12 +29,21 @@ const Movies = () => {
     }
     const getMoviesBySearch = async () => {
       try {
+        setIsLoading(true);
+        setMovies(null);
+        setError(null);
         const response = await fetchMoviesBySearch(MovieName, page);
+        if (response.data.total_results === 0) {
+          console.log('waht');
+          return toast.error('Nothing found for your request');
+        }
         setMovies(response.data.results);
         console.log(response.data);
         setPageCount(response.data.total_pages);
       } catch (error) {
-        console.log(error.message);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getMoviesBySearch();
@@ -44,7 +57,9 @@ const Movies = () => {
   return (
     <>
       <Searchbar onGetMovies={onGetQuery} />
-      {movies && <MoviesList movies={movies} />}
+      {movies && !isLoading && <MoviesList movies={movies} />}
+      {error && toast.error(`${error.message}`)}
+      {isLoading && <Loader />}
       {pageCount > 1 && (
         <ReactPaginate
           breakLabel="..."
