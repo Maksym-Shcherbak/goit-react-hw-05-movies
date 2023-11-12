@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-export const ButtonMore = styled.button`
+export const StyledButton = styled.button`
   padding: 8px 16px;
   border-radius: 2px;
   background-color: #3f51b5;
@@ -22,5 +22,9 @@ export const ButtonMore = styled.button`
   &:hover,
   &:focus {
     background-color: #303f9f;
+  }
+
+  &:disabled {
+    background-color: orangered;
   }
 `;

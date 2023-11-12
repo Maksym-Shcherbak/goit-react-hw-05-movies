@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getReviews } from 'helpers/PixabayAPI';
+import { getReviews } from 'helpers/MoviesAPI';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState(null);
   const { movieId } = useParams();
 
   useEffect(() => {
+    if (!movieId) {
+      return;
+    }
     const saveReviews = async () => {
       try {
         const response = await getReviews(movieId);
@@ -35,3 +38,5 @@ export const Reviews = () => {
     </>
   );
 };
+
+export default Reviews;

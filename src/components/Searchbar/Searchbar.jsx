@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { SearchBarHeader } from './SearchBar.styled';
 import { SearchForm } from 'components/SearchForm/SearchForm';
 
-export const Searchbar = ({ onGetImages }) => {
+export const Searchbar = ({ onGetMovies }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const onHandleSubmit = e => {
@@ -13,7 +13,7 @@ export const Searchbar = ({ onGetImages }) => {
       toast.info('Enter query');
       return;
     }
-    onGetImages(searchQuery);
+    onGetMovies(searchQuery);
     setSearchQuery('');
     const form = e.target;
     form.reset();
@@ -31,5 +31,5 @@ export const Searchbar = ({ onGetImages }) => {
 };
 
 Searchbar.propTypes = {
-  onGetImages: PropTypes.func.isRequired,
+  onGetMovies: PropTypes.func.isRequired,
 };

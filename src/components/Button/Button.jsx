@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
-import { ButtonMore } from './ButtonMore.styled';
+import { StyledButton } from './Button.styled';
 
-export const Button = ({ onButtonClick }) => {
+export const Button = ({ onButtonClick, children, timeWindow, disabled }) => {
   return (
-    <ButtonMore className="Button" type="button" onClick={onButtonClick}>
-      Load more
-    </ButtonMore>
+    <StyledButton
+      className="Button"
+      type="button"
+      onClick={onButtonClick}
+      data-time={timeWindow}
+    >
+      {children}
+    </StyledButton>
   );
 };
 

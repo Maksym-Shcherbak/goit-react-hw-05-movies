@@ -20,3 +20,7 @@ export const getCast = id => {
 export const getReviews = id => {
   return axios.get(`/movie/${id}/reviews`);
 };
+
+export const fetchMoviesBySearch = (query, page) => {
+  return axios.get(`/search/movie?query=${query}&page=${page}`);
+};

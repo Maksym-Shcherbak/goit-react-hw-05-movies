@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
-import { getMovieById } from 'helpers/PixabayAPI';
+import { useParams, useLocation } from 'react-router-dom';
+import { BackLink } from 'components/BackLink/BackLink.styled';
+import { getMovieById } from 'helpers/MoviesAPI';
+import { MovieDetailsItem } from 'components/MovieDetailsItem/MovieDetailsItem';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const { movieId } = useParams();
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
+    if (!movieId) {
+      return;
+    }
     const getMovieDetails = async () => {
       try {
         console.log(movieId);
@@ -22,29 +29,10 @@ export const MovieDetails = () => {
 
   return (
     <>
-      {movieInfo && (
-        <>
-          <img
-            src={`http://image.tmdb.org/t/p/original${movieInfo.backdrop_path}`}
-            alt={movieInfo.title}
-            width="350"
-          />
-          <h2>{movieInfo.original_title}</h2>
-          <p>User score: {(Number(movieInfo.vote_average) / 10) * 100}%</p>
-          <p>{movieInfo.overview}</p>
-          <p>Genres: {movieInfo.genres.map(genre => `${genre.name}, `)}</p>
-          <h3>Additional information</h3>
-          <ul>
-            <li>
-              <Link to="cast">Cast</Link>
-            </li>
-            <li>
-              <Link to="reviews">Reviews</Link>
-            </li>
-          </ul>
-          <Outlet />
-        </>
-      )}
+      <BackLink to={backLinkHref}>Back to movies</BackLink>
+      {movieInfo && <MovieDetailsItem movie={movieInfo} />}
     </>
   );
 };
+
+export default MovieDetails;

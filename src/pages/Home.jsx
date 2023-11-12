@@ -1,46 +1,54 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { getMovies } from 'helpers/PixabayAPI';
+import { getMovies } from 'helpers/MoviesAPI';
+import { MoviesList } from 'components/MoviesList/MoviesList';
+import { ChangeTrendTime } from 'components/TrendButtons/TrendButtons';
 
-export const Home = () => {
-  const [trendMovies, setTrendMovies] = useState([]);
-
+const Home = () => {
+  const [trendMovies, setTrendMovies] = useState(null);
+  const [timeTrend, setTimeTrend] = useState('day');
+  const [disabled, setDisabled] = useState(false);
   useEffect(() => {
+    const getTrendMovies = async () => {
+      try {
+        const response = await getMovies(timeTrend);
+        setTrendMovies(response.data.results);
+        console.log(response.data.results);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
     getTrendMovies();
-  }, []);
+  }, [timeTrend]);
 
-  const getTrendMovies = async () => {
-    try {
-      const response = await getMovies('day');
-      setTrendMovies(response.data.results);
-    } catch (error) {
-      console.log(error.message);
+  const onChangeTrend = e => {
+    console.log(e.target);
+    if (e.target.dataset.time === 'day') {
+      setDisabled(disabled => !disabled);
+      e.target.disabled = !disabled;
+      e.target.nextElementSibling.disabled = disabled;
+    } else {
+      setDisabled(disabled => !disabled);
+      e.target.disabled = disabled;
+      e.target.previousElementSibling.disabled = !disabled;
     }
+    setTimeTrend(e.target.dataset.time);
   };
 
-  const location = useLocation();
-
-  console.log(trendMovies);
   return (
     <>
-      <h1>Welcome to Cinema Max</h1>
-      <ul>
-        {trendMovies.length > 0 &&
-          trendMovies.map(movie => {
-            return (
-              <li key={movie.id}>
-                <Link to={`movies/${movie.id}`} state={{ from: location }}>
-                  <img
-                    src={`http://image.tmdb.org/t/p/original${movie.poster_path}`}
-                    alt={movie.title}
-                    width="350"
-                  />
-                  <h3>{movie.original_title}</h3>
-                </Link>
-              </li>
-            );
-          })}
-      </ul>
+      <h1>Find the movie you wanted and enjoy it</h1>
+      {
+        <ChangeTrendTime
+          onChangeTrend={onChangeTrend}
+          firstBtnText={'Day'}
+          secondBtnText={'Week'}
+          day={'day'}
+          week={'week'}
+        />
+      }
+      {trendMovies && <MoviesList movies={trendMovies} />}
     </>
   );
 };
+
+export default Home;

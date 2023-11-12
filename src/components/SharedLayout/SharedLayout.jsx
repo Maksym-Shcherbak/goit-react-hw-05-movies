@@ -1,26 +1,31 @@
-import { Outlet, NavLink } from 'react-router-dom';
-// import { Container, Header, Logo, Link } from './SharedLayout.styled';
+import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Container, Header, Logo, Link } from './SharedLayout.styled';
 
 export const SharedLayout = () => {
   return (
     <>
-      <header>
-        <div>
-          <span role="img" aria-label="computer icon">
-            💻
-          </span>{' '}
-          GoMerch Store
-        </div>
-        <nav>
-          <NavLink to="/" end>
-            Home
-          </NavLink>
-          <NavLink to="/movies">Movies</NavLink>
-        </nav>
-      </header>
-      <main>
-        <Outlet />
-      </main>
+      <Container>
+        <Header>
+          <Logo>
+            <span role="img" aria-label="computer icon">
+              🎬
+            </span>{' '}
+            Cinema Max
+          </Logo>
+          <nav>
+            <Link to="/" end>
+              Home
+            </Link>
+            <Link to="/movies">Movies</Link>
+          </nav>
+        </Header>
+        <Suspense fallback={<div>Loading...</div>}>
+          <main>
+            <Outlet />
+          </main>
+        </Suspense>
+      </Container>
     </>
   );
 };
