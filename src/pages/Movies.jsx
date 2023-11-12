@@ -4,7 +4,6 @@ import { MoviesList } from 'components/MoviesList/MoviesList';
 import { fetchMoviesBySearch } from 'helpers/MoviesAPI';
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
-import '../../node_modules/react-paginate/theme/basic/react-paginate.css';
 import { useSearchParams } from 'react-router-dom';
 import { Loader } from 'components/Loader/Loader';
 
@@ -19,6 +18,8 @@ const Movies = () => {
   const onGetQuery = query => {
     const nextParams = query !== '' ? { query } : {};
     setSearchParams(nextParams);
+    setPage(1);
+    setPageCount(0);
   };
 
   const MovieName = searchParams.get('query') ?? '';

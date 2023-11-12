@@ -2,19 +2,28 @@ import { useState, useEffect } from 'react';
 import { getMovies } from 'helpers/MoviesAPI';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 import { ChangeTrendTime } from 'components/TrendButtons/TrendButtons';
+import { Loader } from 'components/Loader/Loader';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [trendMovies, setTrendMovies] = useState(null);
   const [timeTrend, setTimeTrend] = useState('day');
   const [disabled, setDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const getTrendMovies = async () => {
       try {
+        setIsLoading(true);
+        setTrendMovies(null);
+        setError(null);
         const response = await getMovies(timeTrend);
         setTrendMovies(response.data.results);
-        console.log(response.data.results);
       } catch (error) {
-        console.log(error.message);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getTrendMovies();
@@ -46,6 +55,8 @@ const Home = () => {
           week={'week'}
         />
       }
+      {error && toast.error(`${error.message}`)}
+      {isLoading && <Loader />}
       {trendMovies && <MoviesList movies={trendMovies} />}
     </>
   );
