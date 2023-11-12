@@ -33,6 +33,10 @@ const Cast = () => {
 
   return (
     <>
+      {error ||
+        (actors.lentgh === 0 && (
+          <div>We don't know anything about the cast.</div>
+        ))}
       <CastList>
         {actors &&
           actors.map(({ id, profile_path, name, original_name, character }) => {
