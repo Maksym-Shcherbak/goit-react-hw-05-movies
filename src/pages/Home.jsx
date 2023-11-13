@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 const Home = () => {
   const [trendMovies, setTrendMovies] = useState([]);
   const [timeTrend, setTimeTrend] = useState('day');
-  const [disabled, setDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!timeTrend) {
+      return;
+    }
     const getTrendMovies = async () => {
       try {
         setIsLoading(true);
@@ -29,32 +31,14 @@ const Home = () => {
     getTrendMovies();
   }, [timeTrend]);
 
-  const onChangeTrend = e => {
-    console.log(e.target);
-    if (e.target.dataset.time === 'day') {
-      setDisabled(disabled => !disabled);
-      e.target.disabled = !disabled;
-      e.target.nextElementSibling.disabled = disabled;
-    } else {
-      setDisabled(disabled => !disabled);
-      e.target.disabled = disabled;
-      e.target.previousElementSibling.disabled = !disabled;
-    }
-    setTimeTrend(e.target.dataset.time);
+  const getTrendTime = timeWindow => {
+    setTimeTrend(timeWindow);
   };
 
   return (
     <>
       <h1>Find the movie you wanted and enjoy it</h1>
-      {
-        <ChangeTrendTime
-          onChangeTrend={onChangeTrend}
-          firstBtnText={'Day'}
-          secondBtnText={'Week'}
-          day={'day'}
-          week={'week'}
-        />
-      }
+      {<ChangeTrendTime onGetTrendTime={getTrendTime} />}
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
       {trendMovies.length !== 0 && <MoviesList movies={trendMovies} />}
