@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const Home = () => {
   const [trendMovies, setTrendMovies] = useState([]);
-  const [timeTrend, setTimeTrend] = useState('day');
+  const [timeTrend, setTimeTrend] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
