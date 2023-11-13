@@ -20,6 +20,7 @@ const Home = () => {
         setIsLoading(true);
         setTrendMovies([]);
         setError(null);
+        console.log('error');
         const response = await getMovies(timeTrend);
         setTrendMovies(response.data.results);
       } catch (error) {
@@ -39,7 +40,9 @@ const Home = () => {
     <>
       <h1>Find the movie you wanted and enjoy it</h1>
       {<ChangeTrendTime onGetTrendTime={getTrendTime} />}
-      {error && toast.error(`${error.message}`)}
+      {error && toast.error(`${error.message}`) && (
+        <div>Oops, something went wrong.Try to reload page</div>
+      )}
       {isLoading && <Loader />}
       {trendMovies.length !== 0 && <MoviesList movies={trendMovies} />}
     </>

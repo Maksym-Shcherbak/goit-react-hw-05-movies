@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviews } from 'helpers/MoviesAPI';
+import { toast } from 'react-toastify';
+import { Loader } from 'components/Loader/Loader';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -12,10 +16,13 @@ const Reviews = () => {
     }
     const saveReviews = async () => {
       try {
+        setIsLoading(true);
         const response = await getReviews(movieId);
         setReviews(response.data.results);
       } catch (error) {
-        console.log(error.message);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     saveReviews();
@@ -23,6 +30,9 @@ const Reviews = () => {
 
   return (
     <>
+      {error && toast.error(`${error.message}`)}
+      {isLoading && <Loader />}
+      {reviews.length === 0 && <div>Sorry...No reviews yet.</div>}
       <ul>
         {reviews.length !== 0 &&
           reviews.map(({ id, author, content }) => {

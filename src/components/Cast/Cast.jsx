@@ -8,10 +8,13 @@ import {
   CastItem,
   CastList,
 } from './Cast.styled';
+import { Loader } from 'components/Loader/Loader';
+import { toast } from 'react-toastify';
 
 const Cast = () => {
   const [actors, setActors] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
   const defaultImg =
     'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
@@ -22,10 +25,13 @@ const Cast = () => {
     }
     const getActors = async () => {
       try {
+        setIsLoading(true);
         const response = await getCast(movieId);
         setActors(response.data.cast);
       } catch (error) {
         setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getActors();
@@ -33,10 +39,9 @@ const Cast = () => {
 
   return (
     <>
-      {error ||
-        (actors.lentgh === 0 && (
-          <div>We don't know anything about the cast.</div>
-        ))}
+      {error && toast.error(`${error.message}`)}
+      {isLoading && <Loader />}
+      {actors.length === 0 && <div>We don't know anything about the cast.</div>}
       <CastList>
         {actors &&
           actors.map(({ id, profile_path, name, original_name, character }) => {
