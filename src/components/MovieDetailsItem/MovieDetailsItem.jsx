@@ -3,7 +3,11 @@ import {
   ImageWrapper,
   InfoTable,
   MoreInfoAbout,
+  MovieInfoTable,
   MovieName,
+  MovieTableItem,
+  MovieTableItemName,
+  MovieTableItemText,
   StyledImage,
   StyledLink,
   StyledSection,
@@ -36,24 +40,54 @@ export const MovieDetailsItem = ({ movie }) => {
               alt={movie.title}
             />
           </ImageWrapper>
-          <div>
-            <p>User score: {userScore}%</p>
-            {movie.tagline && <p>Tagline: {movie.tagline}</p>}
-            <p>
-              Genres:{' '}
-              {movie.genres.length > 0
-                ? movie.genres.map((genre, index) => {
-                    if (index !== movie.genres.length - 1) {
-                      return `${genre.name}, `;
-                    }
-                    return `${genre.name}`;
-                  })
-                : 'No information'}
-            </p>
-            <p>Release date: {releaseDate ? releaseDate : 'No information'}</p>
-            <p>Country: {country ? country : 'No information'}</p>
-            <p>Duration: {movie.runtime} min</p>
-          </div>
+          <MovieInfoTable>
+            <MovieTableItem>
+              <MovieTableItemText>
+                <MovieTableItemName>User score:</MovieTableItemName> {userScore}
+                %
+              </MovieTableItemText>
+            </MovieTableItem>
+            <MovieTableItem>
+              {' '}
+              {movie.tagline && (
+                <MovieTableItemText>
+                  <MovieTableItemName>Tagline:</MovieTableItemName>{' '}
+                  {movie.tagline}
+                </MovieTableItemText>
+              )}
+            </MovieTableItem>
+            <MovieTableItem>
+              <MovieTableItemText>
+                <MovieTableItemName>Genres:</MovieTableItemName>{' '}
+                {movie.genres.length > 0
+                  ? movie.genres.map((genre, index) => {
+                      if (index !== movie.genres.length - 1) {
+                        return `${genre.name}, `;
+                      }
+                      return `${genre.name}`;
+                    })
+                  : 'No information'}
+              </MovieTableItemText>
+            </MovieTableItem>
+            <MovieTableItem>
+              <MovieTableItemText>
+                <MovieTableItemName>Release date:</MovieTableItemName>{' '}
+                {releaseDate ? releaseDate : 'No information'}
+              </MovieTableItemText>
+            </MovieTableItem>
+            <MovieTableItem>
+              <MovieTableItemText>
+                <MovieTableItemName>Country:</MovieTableItemName>{' '}
+                {country ? country : 'No information'}
+              </MovieTableItemText>
+            </MovieTableItem>
+            <MovieTableItem>
+              <MovieTableItemText>
+                <MovieTableItemName>Duration:</MovieTableItemName>{' '}
+                {movie.runtime} min
+              </MovieTableItemText>
+            </MovieTableItem>
+          </MovieInfoTable>
         </InfoTable>
       </StyledSection>
       <StyledSection>

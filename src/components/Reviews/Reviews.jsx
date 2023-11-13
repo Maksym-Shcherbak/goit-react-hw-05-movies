@@ -32,7 +32,7 @@ const Reviews = () => {
     <>
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
-      {reviews.length === 0 && <div>Sorry...No reviews yet.</div>}
+      {reviews.length === 0 && !isLoading && <div>Sorry...No reviews yet.</div>}
       <ul>
         {reviews.length !== 0 &&
           reviews.map(({ id, author, content }) => {

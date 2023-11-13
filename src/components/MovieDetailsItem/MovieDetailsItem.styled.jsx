@@ -64,3 +64,16 @@ export const MoreInfoAbout = styled.ul`
   gap: 15px;
   margin-bottom: 20px;
 `;
+
+export const MovieInfoTable = styled.ul``;
+
+export const MovieTableItem = styled.li`
+  margin-bottom: 28px;
+`;
+export const MovieTableItemName = styled.span`
+  display: inline-block;
+  width: 120px;
+  font-size: 18px;
+  font-weight: 600;
+`;
+export const MovieTableItemText = styled.p``;

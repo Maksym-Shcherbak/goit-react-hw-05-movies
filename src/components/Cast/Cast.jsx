@@ -41,7 +41,9 @@ const Cast = () => {
     <>
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
-      {actors.length === 0 && <div>We don't know anything about the cast.</div>}
+      {actors.length === 0 && !isLoading && (
+        <div>We don't know anything about the cast.</div>
+      )}
       <CastList>
         {actors &&
           actors.map(({ id, profile_path, name, original_name, character }) => {
