@@ -1,9 +1,11 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import {
   ImageWrapper,
   InfoTable,
+  MoreInfoAbout,
   MovieName,
   StyledImage,
+  StyledLink,
   StyledSection,
   StyledSubTitle,
 } from './MovieDetailsItem.styled';
@@ -60,14 +62,14 @@ export const MovieDetailsItem = ({ movie }) => {
       </StyledSection>
       <StyledSection>
         <StyledSubTitle>Additional information</StyledSubTitle>
-        <ul>
+        <MoreInfoAbout>
           <li>
-            <Link to="cast">Cast</Link>
+            <StyledLink to="cast">Cast</StyledLink>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <StyledLink to="reviews">Reviews</StyledLink>
           </li>
-        </ul>
+        </MoreInfoAbout>
         <Outlet />
       </StyledSection>
     </>
