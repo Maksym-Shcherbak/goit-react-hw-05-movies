@@ -13,7 +13,6 @@ const Reviews = () => {
     const saveReviews = async () => {
       try {
         const response = await getReviews(movieId);
-        console.log(response.data.results);
         setReviews(response.data.results);
       } catch (error) {
         console.log(error.message);

@@ -4,7 +4,6 @@ import { GridItem, ItemImage } from './MoviesItem.styled';
 
 export const MoviesItem = ({ movies }) => {
   const location = useLocation();
-  console.log(location);
   return movies.map(movie => {
     const path =
       location.pathname === '/' ? `movies/${movie.id}` : `${movie.id}`;

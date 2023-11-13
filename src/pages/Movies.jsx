@@ -35,11 +35,9 @@ const Movies = () => {
         setError(null);
         const response = await fetchMoviesBySearch(MovieName, page);
         if (response.data.total_results === 0) {
-          console.log('waht');
           return toast.error('Nothing found for your request');
         }
         setMovies(response.data.results);
-        console.log(response.data);
         setPageCount(response.data.total_pages);
       } catch (error) {
         setError(error);
@@ -51,7 +49,6 @@ const Movies = () => {
   }, [MovieName, page]);
 
   const handlePageClick = ({ selected }) => {
-    console.log(selected);
     setPage(selected + 1);
   };
 

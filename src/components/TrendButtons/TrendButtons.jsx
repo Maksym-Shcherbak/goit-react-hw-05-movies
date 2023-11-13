@@ -16,7 +16,6 @@ export const ChangeTrendTime = ({ onGetTrendTime }) => {
   const [timeWindow, setTimeWindow] = useState(TrendTime.DAY);
 
   const onChangeTrend = e => {
-    console.log(e.target.value);
     setTimeWindow(e.target.value);
   };
 
