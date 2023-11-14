@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { BackLink } from 'components/BackLink/BackLink.styled';
 import { getMovieById } from 'helpers/MoviesAPI';
@@ -10,16 +10,10 @@ const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [savedLocation, setSavedLocation] = useState('');
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/movies';
 
-  useEffect(() => {
-    const backLinkHref = location.state?.from ?? '/movies';
-    setSavedLocation(backLinkHref);
-  }, [location]);
-  console.log(backLinkHref);
+  const backLinkHref = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) {
@@ -41,7 +35,7 @@ const MovieDetails = () => {
 
   return (
     <>
-      <BackLink to={savedLocation}>Back to movies</BackLink>
+      <BackLink to={backLinkHref.current}>Back to movies</BackLink>
       {error && toast.error(`${error.message}`)}
       {isLoading && <Loader />}
       {movieInfo && <MovieDetailsItem movie={movieInfo} />}

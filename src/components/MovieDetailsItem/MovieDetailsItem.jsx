@@ -14,6 +14,8 @@ import {
   StyledSubTitle,
 } from './MovieDetailsItem.styled';
 import { normalizeDate } from 'helpers/normalizeDate';
+import { Loader } from 'components/Loader/Loader';
+import { Suspense } from 'react';
 
 export const MovieDetailsItem = ({ movie }) => {
   const userScore = Number((movie.vote_average / 10) * 100).toFixed(0);
@@ -104,7 +106,9 @@ export const MovieDetailsItem = ({ movie }) => {
             <StyledLink to="reviews">Reviews</StyledLink>
           </li>
         </MoreInfoAbout>
-        <Outlet />
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </StyledSection>
     </>
   );
