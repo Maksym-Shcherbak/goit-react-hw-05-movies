@@ -1,4 +1,4 @@
-import { Route, Routes, Redirect, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { lazy } from 'react';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 
